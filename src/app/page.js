@@ -14,6 +14,7 @@ import MemberShip from '@/components/MemberShip';
 import CountriesComp from '@/components/CountriesComp';
 import ServicesMain from '@/components/ServicesMain';
 import Contact from '@/components/Contact';
+import Teams from '@/components/team/Teams';
 
 
 const tw = Titillium_Web({ subsets: ['latin'] ,weight: '700' });
@@ -32,8 +33,6 @@ async function getData() {
     description,
     }`;
  return client.fetch(query)
-
- 
 };
 export const revalidate = 60;
 async function getWwdData() {
@@ -105,8 +104,19 @@ async function getCounters() {
 
   
 }
+async function getTeams() {
+  const query = groq`*[_type == "teams"]{
+    "imageUrl": image.asset->url,
+    name,
+    position,
+    description
+  }`;
+  return client.fetch(query);
+
+  
+}
 const Home  = async () =>{
-  const [heroData, wwdData, serviceData, homeAboutData,missionvisionData,memberShipData,countriesData,counterData] = await Promise.all([getData(),getWwdData(),getServiceData(),getAbout(),getMV(),getMemberShip(),getCountries(),getCounters()])
+  const [heroData, wwdData,  serviceData, homeAboutData,missionvisionData,memberShipData,countriesData,counterData,teamsData] = await Promise.all([getData(),getWwdData(),getServiceData(),getAbout(),getMV(),getMemberShip(),getCountries(),getCounters(),getTeams()])
   // console.log(wwdData)
   return (
     <div className="bg-white">
@@ -134,6 +144,14 @@ const Home  = async () =>{
     
    {counterData && <Counter counter={counterData}/>} 
   </div>
+  {teamsData && <section className="team mt-1 ">
+    <Title title="Our Team"/>
+
+    <div className="flex lg:mx-[80px] mx-[20px] justify-center gap-8 flex-wrap py-7">
+    <Teams teamsData={teamsData}/>
+ 
+    </div>
+    </section>}
   {memberShipData && <section className="membership mt-1 ">
     <Title title="Our Membership"/>
 
@@ -148,7 +166,7 @@ const Home  = async () =>{
     </div>} */}
    <Contact/>
     </div>
-
+    
 
   )
 }

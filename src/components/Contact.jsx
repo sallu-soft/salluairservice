@@ -71,7 +71,7 @@ const Contact = () => {
         <h3 className="text-2xl font-semibold md:py-4">Contact details</h3>
         <div className="py-2 md:space-y-1">
         <p className="text-xl text-gray-600 font-semibold">Help line</p>
-        <p className="text-gray-900 md:text-xl font-semibold">+88 01776105863,</p>
+        <p className="text-gray-900 md:text-xl font-semibold">+8801812215760</p>
         </div>
         <div className="py-2 md:space-y-1">
         <p className="text-xl text-gray-600 font-semibold">Support Mail</p>
